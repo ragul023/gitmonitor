@@ -1,21 +1,19 @@
 # GitHub Monitor
 
-GitHub Monitor is a repository activity monitoring system that receives GitHub Webhook events, processes and normalizes the incoming data, stores relevant activity in MongoDB, and provides a real-time monitoring dashboard.
+GitHub Monitor is a project to monitor the activities happening in a GitHub repository.
 
-The main goal of this project is to explore event-driven backend architecture, webhook integration, data normalization, persistence, analytics, and real-time communication.
+In this project, we use GitHub Webhooks to receive repository events automatically. When something happens in the repository, GitHub sends a POST request to our backend with the event details.
 
 ---
 
 ## Project Overview
 
-Instead of continuously polling the GitHub API to check whether something has changed, GitHub Monitor uses GitHub Webhooks.
-
-Whenever an important event occurs in a monitored repository, GitHub automatically sends an HTTP POST request to the GitHub Monitor backend.
+Instead of continuously checking GitHub for changes, we use Webhooks.
 
 ```text
 GitHub Repository
        |
-       | Event occurs
+       | Event happens
        v
 GitHub Webhook
        |
@@ -36,15 +34,15 @@ WebSocket
 React Dashboard
 ```
 
-> **Note:** GitHub Webhooks allow GitHub to automatically send event information to a configured endpoint when repository activity occurs.
+> **Note:** Webhooks are used to get repository events automatically. When an event happens in GitHub, GitHub sends the webhook request to our backend.
 
 ---
 
 ## Initial Plan
 
-The first stage of the project is to receive the GitHub Webhook request, identify the event type, extract the required information from the payload, normalize it, and store the processed data.
+The first thing I want to do is receive the webhook body from GitHub, find which event it is, and then normalize the required data.
 
-The initial processing flow is:
+The initial flow is:
 
 ```text
 GitHub
@@ -86,17 +84,17 @@ MongoDB
 
 ## GitHub Webhook
 
-GitHub sends webhook events to the configured endpoint using an HTTP POST request.
+GitHub sends the webhook to our backend using a POST request.
 
 The Express application receives the request through the webhook route.
 
-The event type is available through the request header:
+We can get the event type from the request header:
 
 ```javascript
 req.headers["x-github-event"]
 ```
 
-The webhook payload is available through:
+We can get the webhook body using:
 
 ```javascript
 req.body
@@ -122,7 +120,7 @@ const createwebhook = (req, res) => {
 
 ## Webhook Payload
 
-A GitHub `push` event contains information similar to:
+For example, a GitHub `push` event contains data like:
 
 ```json
 {
@@ -136,33 +134,33 @@ A GitHub `push` event contains information similar to:
 }
 ```
 
-The payload contains many nested objects and fields. GitHub Monitor will not directly use the entire payload throughout the application.
+The payload contains a lot of information. We don't need to use everything from the payload.
 
-Instead, relevant information will be extracted and normalized into an application-specific structure.
+We will take the important details and convert them into our own format.
 
 ### Important Push Payload Fields
 
-| Field | Responsibility |
+| Field | What it contains |
 | :--- | :--- |
-| `ref` | Identifies the affected branch or reference |
+| `ref` | The branch or reference where the push happened |
 | `before` | Commit SHA before the push |
 | `after` | Commit SHA after the push |
-| `repository` | Repository information such as ID, name and owner |
-| `pusher` | Information about the user who performed the push |
-| `commits` | Array containing all commits included in the push |
-| `head_commit` | Information about the latest commit |
-| `compare` | URL for comparing the changes |
-| `forced` | Indicates whether the push was forced |
-| `created` | Indicates whether a branch or tag was created |
-| `deleted` | Indicates whether a branch or tag was deleted |
+| `repository` | Repository details like ID, name and owner |
+| `pusher` | Details about the person who pushed |
+| `commits` | All commits included in the push |
+| `head_commit` | Details about the latest commit |
+| `compare` | URL to compare the changes |
+| `forced` | Tells whether the push was forced |
+| `created` | Tells whether a branch or tag was created |
+| `deleted` | Tells whether a branch or tag was deleted |
 
 ---
 
 ## Event Processing
 
-After the webhook controller receives the request, the event is passed to `processWebhook()`.
+After receiving the webhook, the controller will pass the event to `processWebhook()`.
 
-The processing layer is responsible for identifying the event and passing it to the appropriate handler.
+`processWebhook()` will send the event to the correct handler using the event dispatcher.
 
 ```text
 Controller
@@ -184,13 +182,13 @@ Event Dispatcher
     +---- workflow_run ----> CI/CD Handler
 ```
 
-The event dispatcher will prevent the webhook controller from becoming responsible for processing every type of GitHub event.
+This keeps the controller simple instead of putting all event processing code inside it.
 
 ---
 
 ## Event Types
 
-GitHub Monitor is planned to support several categories of repository activity.
+I am planning to support these main GitHub events.
 
 ### Code
 
@@ -218,13 +216,13 @@ GitHub Monitor is planned to support several categories of repository activity.
 
 - `release`
 
-The implementation will be introduced incrementally rather than supporting every GitHub event from the beginning.
+I will add these events one by one instead of trying to implement everything at once.
 
 ---
 
 ## Payload Normalization
 
-Different GitHub events contain different payload structures.
+Different GitHub events have different payload structures.
 
 For example:
 
@@ -237,7 +235,7 @@ push
  +-- pusher
 ```
 
-while:
+while a pull request event looks more like:
 
 ```text
 pull_request
@@ -248,7 +246,7 @@ pull_request
  +-- sender
 ```
 
-To avoid coupling the rest of the application directly to GitHub's payload format, the event handlers will normalize the required information.
+Because of this, each handler will take the useful information from the GitHub payload and convert it into a format that our application can use.
 
 For example, a normalized push event could look like:
 
@@ -276,7 +274,7 @@ For example, a normalized push event could look like:
 }
 ```
 
-This normalized structure can then be passed to the service or model layer.
+This normalized data can then be passed to the service or model layer.
 
 ---
 
@@ -307,20 +305,19 @@ subgraph DATA["Data Layer"]
     H --> K
     I --> K
     J --> K
-
     K --> L[(MongoDB)]
 end
 ```
 
 ---
 
-## MongoDB Persistence
+## MongoDB
 
-After the event is normalized, the relevant information will be stored in MongoDB.
+After processing and normalizing the event, the useful data will be stored in MongoDB.
 
-The application will store useful application-level data rather than depending on the complete raw GitHub payload.
+I don't want to store the whole GitHub payload and use it everywhere. Instead, I want to store the data that GitHub Monitor actually needs.
 
-The stored information may include:
+For example:
 
 ```text
 Event
@@ -336,15 +333,15 @@ Event
  +-- CI/CD Information
 ```
 
-The database will provide the historical data required by the monitoring dashboard and analytics APIs.
+This data can later be used for the activity page and analytics.
 
 ---
 
 ## REST API
 
-The frontend will communicate with the backend through REST APIs.
+The frontend will get the stored information through REST APIs.
 
-Planned endpoints include:
+Some planned APIs are:
 
 ```text
 GET /api/repositories
@@ -355,15 +352,15 @@ GET /api/repositories/:id/activity
 GET /api/repositories/:id/analytics
 ```
 
-These APIs will provide repository activity, historical events, and aggregated statistics.
+These APIs will be used to get repository activity, old events, and analytics.
 
 ---
 
 ## Monitoring Dashboard
 
-The frontend will provide a repository monitoring dashboard.
+The frontend will show the activities happening in the repository.
 
-The dashboard is planned to display information such as:
+For example:
 
 ```text
 Repository Overview
@@ -376,7 +373,7 @@ CI Success Rate       91%
 Deployments             8
 ```
 
-It will also contain an activity timeline:
+It can also show an activity timeline:
 
 ```text
 Recent Activity
@@ -402,9 +399,9 @@ Recent Activity
 
 ## Repository Analytics
 
-GitHub Monitor will provide repository-level analytics based on the processed events.
+After collecting enough events, the project can show some repository statistics.
 
-Possible metrics include:
+Some possible metrics are:
 
 - Total commits
 - Commit activity
@@ -419,17 +416,17 @@ Possible metrics include:
 - Deployment status
 - Repository activity trends
 
-The goal is to transform raw repository events into useful information about repository activity.
+The idea is to convert the raw GitHub events into useful information about the repository.
 
 ---
 
 ## Real-Time Updates
 
-A planned feature of GitHub Monitor is real-time dashboard updates.
+One of the planned features is to update the dashboard without refreshing the page.
 
-Without real-time communication, the frontend would need to request updated information from the backend periodically or after a user refreshes the page.
+Without WebSocket, the frontend would need to request the backend again to check whether something new happened.
 
-The planned architecture uses WebSocket communication between the backend and frontend.
+With WebSocket, the backend can directly send the new event to the connected frontend.
 
 ```text
 GitHub
@@ -448,7 +445,7 @@ Event Processing
                     React Dashboard
 ```
 
-When a new GitHub event is successfully processed, the backend can broadcast the normalized event to connected clients.
+For example:
 
 ```text
 GitHub Push
@@ -472,7 +469,7 @@ React
 Dashboard updates instantly
 ```
 
-This allows new repository activity to appear without manually refreshing the page.
+This means the user does not need to refresh the page to see a new repository activity.
 
 ---
 
@@ -496,7 +493,7 @@ F --> G[React Client]
 G --> H[Real-Time Dashboard]
 ```
 
-WebSocket communication will be used for events such as:
+WebSocket can be used for:
 
 - New commits
 - Pull Request updates
@@ -509,7 +506,7 @@ WebSocket communication will be used for events such as:
 
 ## Webhook Security
 
-The production implementation will verify GitHub's webhook signature before processing the request.
+Later, I will verify GitHub's webhook signature before processing the request.
 
 ```text
 GitHub
@@ -526,7 +523,7 @@ Signature Verification
    +---- Valid ------> Event Processing
 ```
 
-This prevents unauthorized clients from sending arbitrary webhook events to the application.
+This will make sure random clients cannot simply send fake GitHub events to the webhook endpoint.
 
 ---
 
@@ -699,26 +696,26 @@ MongoDB
 
 ## Project Purpose
 
-GitHub Monitor is being developed as a backend-focused showcase project to demonstrate practical software engineering concepts:
+I am building GitHub Monitor as a showcase project to learn and demonstrate:
 
 - Webhook integration
-- Event-driven architecture
-- REST API design
+- Event-driven backend
+- REST APIs
 - Event dispatching
 - Payload normalization
-- MongoDB data modeling
+- MongoDB
 - Service-layer architecture
 - GitHub integration
 - CI/CD monitoring
 - Real-time communication
-- WebSocket architecture
+- WebSocket
 - Data analytics
-- Frontend/backend integration
+- Frontend and backend integration
 
 ---
 
 ## Project Status
 
-This project is actively under development.
+This project is currently under development.
 
-The architecture and roadmap may evolve as new features are implemented.
+The plan may change as I build more features and learn from the implementation.

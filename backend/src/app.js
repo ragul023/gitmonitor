@@ -1,15 +1,9 @@
 const express = require("express");
 const cors = require("cors");
-require("dotenv").config();
 
-const connectDB = require("./config/db.js");
 const webhookRoutes = require("./routes/webhook.routes");
 
-connectDB();
-
 const app = express();
-
-const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
@@ -22,6 +16,4 @@ app.get("/", (req, res) => {
     });
 });
 
-app.listen(PORT, () => {
-    console.log(`Server is running on ${PORT}`);
-});
+module.exports = app;

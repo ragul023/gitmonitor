@@ -553,7 +553,7 @@ This will make sure random clients cannot simply send fake GitHub events to the 
 
 ---
 
-## Planned Backend Structure
+<!-- ## Planned Backend Structure
 
 ```text
 backend/
@@ -588,9 +588,9 @@ backend/
 +-- server.js
 ```
 
----
+--- -->
 
-## Development Roadmap
+<!-- ## Development Roadmap
 
 ### Phase 1 — Webhook Foundation
 
@@ -656,9 +656,9 @@ backend/
 - [ ] Deployment
 - [ ] Environment configuration
 
----
+--- -->
 
-## Current Status
+<!-- ## Current Status
 
 **Current Phase: Phase 1 — Webhook Foundation**
 
@@ -692,7 +692,7 @@ Normalize Payload
 MongoDB
 ```
 
----
+--- -->
 
 ## Project Purpose
 

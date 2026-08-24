@@ -1,8 +1,11 @@
 const express = require("express");
-const webhook = require("../services/webhook.services")
+
+const {
+    processWebhook,
+} = require("../controllers/webhook.controller");
+
 const router = express.Router();
 
-
-router.post("/github",webhook.createwebhook)
+router.post("/github", processWebhook);
 
 module.exports = router;

@@ -1,3 +1,6 @@
+
+
+
 const pushHandler = (payload) => {
     console.log("Push Handler Working");
 
@@ -9,10 +12,12 @@ const pushHandler = (payload) => {
 const pullHandler = (payload) => {
     console.log("Pull Request Handler Working");
 
-    console.log("Action:", payload.action);
-    console.log("Pull Request:", payload.pull_request?.title);
-    console.log("Repository:", payload.repository?.full_name);
-    console.log("Author:", payload.sender?.login);
+    // console.log("Action:", payload.action);
+    // console.log("Pull Request:", payload.pull_request?.title);
+    // console.log("Repository:", payload.repository?.full_name);
+    // console.log("Author:", payload.sender?.login);
+
+
 };
 
 const issuesHandler = (payload) => {

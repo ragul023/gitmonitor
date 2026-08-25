@@ -22,7 +22,7 @@ const processWebhook = (req, res) => {
         });
     }
 
-    eventDispatcher.dispatch(event, body);
+    eventDispatcher.dispatch(event, body , deliveryId);
 
     return res.status(200).json({
         message: "Webhook received",

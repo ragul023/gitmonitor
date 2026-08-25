@@ -1,12 +1,13 @@
 const eventHandler = require("../handlers/eventHandler");
+const pushHandler = require("../handlers/push.Handler")
 
 const eventHandlers = {
-    push: eventHandler.pushHandler,
+    push:pushHandler,
     pull_request: eventHandler.pullHandler,
     issues: eventHandler.issuesHandler,
 };
 
-const dispatch = (event, body) => {
+const dispatch = (event, body , deliveryId) => {
     if (!body) {
         return null;
     }
@@ -20,7 +21,7 @@ const dispatch = (event, body) => {
 
     console.log(`Dispatching ${event} event`);
 
-    return handler(body);
+    return handler(body,deliveryId);
 };
 
 module.exports = {

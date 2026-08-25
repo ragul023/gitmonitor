@@ -1,0 +1,289 @@
+.events-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.events-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.events-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.events-subtitle {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+/* Filters */
+.events-filters {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  border-radius: var(--radius-lg);
+  flex-wrap: wrap;
+}
+
+.events-search {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  background: var(--bg-surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  min-width: 200px;
+  flex: 1;
+  max-width: 300px;
+  transition: border-color var(--transition);
+}
+
+.events-search:focus-within {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.events-search svg {
+  color: var(--text-muted);
+}
+
+.events-search input {
+  flex: 1;
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  font-size: 13px;
+}
+
+.events-search input::placeholder {
+  color: var(--text-muted);
+}
+
+.events-search-clear {
+  background: none;
+  color: var(--text-muted);
+  padding: 2px;
+  border-radius: var(--radius-sm);
+  transition: color var(--transition);
+}
+
+.events-search-clear:hover {
+  color: var(--text-primary);
+}
+
+.events-filter-group {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.events-filter-btn {
+  padding: var(--space-2) var(--space-3);
+  background: var(--bg-surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 500;
+  transition: all var(--transition);
+}
+
+.events-filter-btn:hover {
+  border-color: var(--border-glow);
+  color: var(--text-primary);
+}
+
+.events-filter-btn--active {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--accent-hover);
+}
+
+.events-selects {
+  display: flex;
+  gap: var(--space-2);
+  margin-left: auto;
+}
+
+.events-selects select {
+  padding: var(--space-2) var(--space-3);
+  background: var(--bg-surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-size: 12px;
+  cursor: pointer;
+  transition: border-color var(--transition);
+}
+
+.events-selects select:hover {
+  border-color: var(--border-glow);
+}
+
+.events-selects select:focus {
+  border-color: var(--accent);
+}
+
+/* Table */
+.events-table {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.events-table-header {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1.2fr 1fr 1fr 0.8fr;
+  padding: var(--space-3) var(--space-5);
+  border-bottom: 1px solid var(--border);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.events-row {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1.2fr 1fr 1fr 0.8fr;
+  padding: var(--space-3) var(--space-5);
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: background var(--transition);
+  align-items: center;
+}
+
+.events-row:hover {
+  background: var(--bg-surface-2);
+}
+
+.events-row:last-child {
+  border-bottom: none;
+}
+
+.events-row-event {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-weight: 500;
+}
+
+.events-row-icon {
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+}
+
+.events-row-icon--blue { background: var(--accent-soft); color: var(--accent); }
+.events-row-icon--purple { background: var(--purple-soft); color: var(--purple); }
+.events-row-icon--warning { background: var(--warning-soft); color: var(--warning); }
+
+.events-row-user {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.events-row-avatar {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--gradient-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 600;
+  color: white;
+  flex-shrink: 0;
+}
+
+.events-row-repo {
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+.events-row-branch {
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+.events-row-time {
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.events-row-status {
+  display: inline-flex;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-sm);
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: capitalize;
+  width: fit-content;
+}
+
+.events-row-status--green { background: var(--success-soft); color: var(--success); }
+.events-row-status--warning { background: var(--warning-soft); color: var(--warning); }
+.events-row-status--purple { background: var(--purple-soft); color: var(--purple); }
+.events-row-status--red { background: var(--error-soft); color: var(--error); }
+
+.events-empty {
+  padding: var(--space-7);
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .events-table-header,
+  .events-row {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+  .events-table-header span:nth-child(5),
+  .events-table-header span:nth-child(6),
+  .events-row > span:nth-child(5),
+  .events-row > span:nth-child(6) {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .events-filters {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .events-search {
+    max-width: none;
+  }
+  .events-selects {
+    margin-left: 0;
+  }
+  .events-table-header {
+    display: none;
+  }
+  .events-row {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-4);
+  }
+  .events-row > span:nth-child(3),
+  .events-row > span:nth-child(4) {
+    display: none;
+  }
+}

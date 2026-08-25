@@ -1,0 +1,254 @@
+.event-details-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 199;
+  animation: fade-in 200ms ease-out;
+}
+
+.event-details {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 480px;
+  max-width: 100%;
+  height: 100vh;
+  background: var(--bg-surface);
+  border-left: 1px solid var(--border-light);
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  animation: slide-in-right 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes slide-in-right {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.event-details-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-5);
+  border-bottom: 1px solid var(--border);
+}
+
+.event-details-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.event-details-type-icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
+}
+
+.event-details-type-icon--blue { background: var(--accent-soft); color: var(--accent); }
+.event-details-type-icon--purple { background: var(--purple-soft); color: var(--purple); }
+.event-details-type-icon--warning { background: var(--warning-soft); color: var(--warning); }
+
+.event-details-heading {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.event-details-id {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+.event-details-close {
+  background: none;
+  color: var(--text-secondary);
+  padding: var(--space-2);
+  border-radius: var(--radius-sm);
+  transition: all var(--transition);
+}
+
+.event-details-close:hover {
+  color: var(--text-primary);
+  background: var(--bg-surface-2);
+}
+
+.event-details-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-5);
+}
+
+.event-details-section {
+  margin-bottom: var(--space-6);
+}
+
+.event-details-section-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--space-4);
+}
+
+.event-details-info-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.event-details-info-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  color: var(--text-muted);
+}
+
+.event-details-info-item > div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.event-details-info-label {
+  font-size: 11px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.event-details-info-value {
+  font-size: 13px;
+  color: var(--text-primary);
+}
+
+.event-details-info-value--mono {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  word-break: break-all;
+}
+
+.event-details-commits {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.event-details-commit {
+  display: flex;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  background: var(--bg-surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.event-details-commit-sha {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--accent);
+  background: var(--accent-soft);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-sm);
+  height: fit-content;
+  flex-shrink: 0;
+}
+
+.event-details-commit-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.event-details-commit-msg {
+  font-size: 13px;
+  color: var(--text-primary);
+  line-height: 1.4;
+  margin-bottom: var(--space-2);
+}
+
+.event-details-commit-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.event-details-commit-meta > span:first-child {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.event-details-commit-changes {
+  display: flex;
+  gap: var(--space-2);
+  font-size: 11px;
+  font-family: var(--font-mono);
+}
+
+.event-details-commit-add { color: var(--success); }
+.event-details-commit-mod { color: var(--warning); }
+.event-details-commit-del { color: var(--error); }
+
+.event-details-files {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.event-details-file {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  background: var(--bg-surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+}
+
+.event-details-file:hover {
+  border-color: var(--border-glow);
+  color: var(--text-primary);
+}
+
+.event-details-issue-note {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  background: var(--warning-soft);
+  border: 1px solid rgba(210, 153, 34, 0.2);
+  border-radius: var(--radius-md);
+  color: var(--warning);
+}
+
+.event-details-issue-note p {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  .event-details {
+    width: 100%;
+  }
+}

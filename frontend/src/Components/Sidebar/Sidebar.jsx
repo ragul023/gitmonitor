@@ -5,7 +5,7 @@ const navItems = [
   { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { id: 'events', label: 'Events', icon: Activity },
   { id: 'repositories', label: 'Repositories', icon: GitBranch },
-  { id: 'ai', label: 'AI Assistant', icon: Bot },
+  // { id: 'ai', label: 'AI Assistant', icon: Bot },
   { id: 'settings', label: 'Settings', icon: Settings },
 ];
 

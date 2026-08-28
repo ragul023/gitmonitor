@@ -2,8 +2,8 @@ const Repository = require("../models/Repository.model");
 const User = require("../models/User.model");
 const Event = require("../models/Events.models");
 
-const pushHandler = async (payload, deliveryId) => {
-    console.log("Reached Push Handler");
+const issuesHandler = async (payload, deliveryId) => {
+    console.log("Reached Issues Handler");
 
     // Repository
     const repoData = payload.repository;
@@ -59,40 +59,20 @@ const pushHandler = async (payload, deliveryId) => {
     const event = await Event.create({
         deliveryId,
 
-        eventType: "push",
+        eventType: "issues",
 
         repositoryId: repo._id,
 
         actorId: user._id,
-
-        ref: payload.ref,
-
-        branch: payload.ref.replace("refs/heads/", ""),
-
-        beforeSha: payload.before,
-
-        afterSha: payload.after,
-
-        forced: payload.forced,
-
-        created: payload.created,
-
-        deleted: payload.deleted,
-
-        compareUrl: payload.compare,
-
-        commitCount: payload.commits?.length || 0,
-
-        headCommitSha: payload.head_commit?.id,
 
         status: "processed",
 
         processedAt: new Date(),
     });
 
-    console.log("Push event saved:", event._id);
+    console.log("Issue event saved:", event._id);
 
     return event;
 };
 
-module.exports = pushHandler;
+module.exports = issuesHandler;

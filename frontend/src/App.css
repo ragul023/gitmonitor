@@ -38,3 +38,304 @@
     padding: var(--space-4);
   }
 }
+
+
+/* =========================================
+   SONNER - GITHUB MONITOR TOAST
+   ========================================= */
+
+/* Toast */
+.app-toast {
+  width: 360px !important;
+  min-height: 60px !important;
+
+  background: #0d1117 !important;
+  color: #f0f6fc !important;
+
+  border: 1px solid #30363d !important;
+  border-radius: 10px !important;
+
+  padding: 14px 42px 14px 16px !important;
+
+  font-family: inherit !important;
+
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.35),
+    0 2px 8px rgba(0, 0, 0, 0.2) !important;
+
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease !important;
+}
+
+
+/* =========================================
+   TITLE
+   ========================================= */
+
+.app-toast [data-title] {
+  color: #f0f6fc !important;
+
+  font-size: 14px !important;
+  font-weight: 600 !important;
+
+  line-height: 1.4 !important;
+}
+
+
+/* =========================================
+   DESCRIPTION
+   ========================================= */
+
+.app-toast [data-description] {
+  color: #8b949e !important;
+
+  font-size: 13px !important;
+  font-weight: 400 !important;
+
+  line-height: 1.4 !important;
+
+  margin-top: 3px !important;
+}
+
+
+/* =========================================
+   SUCCESS
+   ========================================= */
+
+.app-toast[data-type="success"] {
+  border-color: rgba(63, 185, 80, 0.45) !important;
+}
+
+.app-toast[data-type="success"] svg {
+  color: #3fb950 !important;
+}
+
+
+/* =========================================
+   ERROR
+   ========================================= */
+
+.app-toast[data-type="error"] {
+  border-color: rgba(248, 81, 73, 0.45) !important;
+}
+
+.app-toast[data-type="error"] svg {
+  color: #f85149 !important;
+}
+
+
+/* =========================================
+   WARNING
+   ========================================= */
+
+.app-toast[data-type="warning"] {
+  border-color: rgba(210, 153, 34, 0.45) !important;
+}
+
+.app-toast[data-type="warning"] svg {
+  color: #d29922 !important;
+}
+
+
+/* =========================================
+   INFO
+   ========================================= */
+
+.app-toast[data-type="info"] {
+  border-color: rgba(88, 166, 255, 0.45) !important;
+}
+
+.app-toast[data-type="info"] svg {
+  color: #58a6ff !important;
+}
+
+
+/* =========================================
+   LOADING
+   ========================================= */
+
+.app-toast[data-type="loading"] {
+  border-color: #30363d !important;
+}
+
+.app-toast[data-type="loading"] svg {
+  color: #8b949e !important;
+}
+
+
+/* =========================================
+   CLOSE BUTTON
+   ========================================= */
+
+.app-toast [data-close-button] {
+  position: absolute !important;
+
+  top: 10px !important;
+  right: 10px !important;
+
+  width: 24px !important;
+  height: 24px !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  background: transparent !important;
+
+  border: none !important;
+  border-radius: 6px !important;
+
+  color: #8b949e !important;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease !important;
+}
+
+.app-toast [data-close-button]:hover {
+  background: #21262d !important;
+  color: #f0f6fc !important;
+}
+
+
+/* =========================================
+   ACTION BUTTON
+   ========================================= */
+
+.app-toast [data-button] {
+  background: #238636 !important;
+
+  color: #ffffff !important;
+
+  border: none !important;
+  border-radius: 6px !important;
+
+  padding: 6px 12px !important;
+
+  font-size: 12px !important;
+  font-weight: 600 !important;
+
+  cursor: pointer !important;
+
+  transition: background 0.2s ease !important;
+}
+
+.app-toast [data-button]:hover {
+  background: #2ea043 !important;
+}
+
+
+/* =========================================
+   CANCEL BUTTON
+   ========================================= */
+
+.app-toast [data-cancel] {
+  background: #21262d !important;
+
+  color: #c9d1d9 !important;
+
+  border: 1px solid #30363d !important;
+  border-radius: 6px !important;
+
+  padding: 6px 12px !important;
+
+  font-size: 12px !important;
+
+  cursor: pointer !important;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease !important;
+}
+
+.app-toast [data-cancel]:hover {
+  background: #30363d !important;
+  border-color: #484f58 !important;
+}
+
+
+/* =========================================
+   HOVER
+   ========================================= */
+
+.app-toast:hover {
+  border-color: #484f58 !important;
+
+  box-shadow:
+    0 14px 35px rgba(0, 0, 0, 0.4),
+    0 3px 10px rgba(0, 0, 0, 0.25) !important;
+}
+
+
+/* =========================================
+   TOAST WITH ACTIONS
+   ========================================= */
+
+.app-toast [data-content] {
+  min-width: 0 !important;
+}
+
+.app-toast [data-action] {
+  margin-top: 8px !important;
+}
+
+
+/* =========================================
+   ICON
+   ========================================= */
+
+.app-toast [data-icon] {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  margin-right: 10px !important;
+}
+
+.app-toast [data-icon] svg {
+  width: 18px !important;
+  height: 18px !important;
+
+  stroke-width: 2 !important;
+}
+
+
+/* =========================================
+   TOAST STACK SPACING
+   ========================================= */
+
+[data-sonner-toaster] {
+  --width: 360px !important;
+}
+
+
+/* =========================================
+   MOBILE
+   ========================================= */
+
+@media (max-width: 600px) {
+  .app-toast {
+    width: calc(100vw - 32px) !important;
+
+    max-width: none !important;
+
+    margin: 0 16px !important;
+  }
+
+  [data-sonner-toaster] {
+    width: 100% !important;
+  }
+}
+
+
+/* =========================================
+   REDUCED MOTION
+   ========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .app-toast {
+    transition: none !important;
+  }
+}

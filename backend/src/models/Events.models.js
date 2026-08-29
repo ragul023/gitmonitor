@@ -4,6 +4,7 @@ const eventSchema = new mongoose.Schema(
     {
         deliveryId: {
             type: String,
+            required:true, 
             unique: true,
             index: true,
         },
@@ -18,6 +19,7 @@ const eventSchema = new mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: "Repository",
             required: true,
+            index:true,
         },
 
         actorId: {

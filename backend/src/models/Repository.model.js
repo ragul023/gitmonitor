@@ -1,41 +1,52 @@
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
 
 const repoSchema = new mongoose.Schema(
     {
-        githubId:{
+        githubId: {
             type: Number,
-            required : true,
-            unique : true,
-            index : true
+            required: true,
+            unique: true,
+            index: true
         },
-        name:{
-            type:String,
-            required : true,
+
+        userId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
+            required: true,
+            index: true
         },
-        fullName :{
-            type:String,
-            required:true,
-            unique:true,
+
+        name: {
+            type: String,
+            required: true,
         },
-        owner :{
-            githubId:Number,
-            username:String,
+
+        fullName: {
+            type: String,
+            required: true,
+            unique: true,
         },
-        defaultBranch:String,
 
-        private:Boolean,
+        owner: {
+            githubId: Number,
+            username: String,
+        },
 
-        visibility:String,
+        defaultBranch: String,
 
-        language:String,
+        private: Boolean,
 
-        url:String,
+        visibility: String,
 
-        htmlUrl:String
+        language: String,
+
+        url: String,
+
+        htmlUrl: String
     },
     {
-        timestamps:true,
+        timestamps: true,
     }
 );
 
-module.exports = mongoose.model("Repository",repoSchema)
+module.exports = mongoose.model("Repository", repoSchema);

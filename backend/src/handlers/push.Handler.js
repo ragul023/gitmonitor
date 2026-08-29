@@ -5,37 +5,6 @@ const Event = require("../models/Events.models");
 const pushHandler = async (payload, deliveryId) => {
     console.log("Reached Push Handler");
 
-    // Repository
-    const repoData = payload.repository;
-
-    const repo = await Repository.findOneAndUpdate(
-        {
-            githubId: repoData.id,
-        },
-        {
-            githubId: repoData.id,
-            name: repoData.name,
-            fullName: repoData.full_name,
-
-            owner: {
-                githubId: repoData.owner.id,
-                username: repoData.owner.login,
-            },
-
-            defaultBranch: repoData.default_branch,
-            private: repoData.private,
-            visibility: repoData.visibility,
-            language: repoData.language,
-
-            url: repoData.url,
-            htmlUrl: repoData.html_url,
-        },
-        {
-            new: true,
-            upsert: true,
-        }
-    );
-
     // User
     const userData = payload.sender;
 
@@ -44,10 +13,52 @@ const pushHandler = async (payload, deliveryId) => {
             githubId: userData.id,
         },
         {
-            githubId: userData.id,
-            username: userData.login,
-            avatarUrl: userData.avatar_url,
-            profileUrl: userData.html_url,
+            $set: {
+                username: userData.login,
+                avatarUrl: userData.avatar_url,
+                profileUrl: userData.html_url,
+            },
+            $setOnInsert: {
+                githubId: userData.id,
+            },
+        },
+        {
+            new: true,
+            upsert: true,
+        }
+    );
+
+    // Repository
+    const repoData = payload.repository;
+
+    const repo = await Repository.findOneAndUpdate(
+        {
+            githubId: repoData.id,
+        },
+        {
+            $set: {
+                userId: user._id,
+
+                name: repoData.name,
+                fullName: repoData.full_name,
+
+                owner: {
+                    githubId: repoData.owner.id,
+                    username: repoData.owner.login,
+                },
+
+                defaultBranch: repoData.default_branch,
+                private: repoData.private,
+                visibility: repoData.visibility,
+                language: repoData.language,
+
+                url: repoData.url,
+                htmlUrl: repoData.html_url,
+            },
+
+            $setOnInsert: {
+                githubId: repoData.id,
+            },
         },
         {
             new: true,
